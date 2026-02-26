@@ -5,88 +5,98 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Emergency Comfort RNG</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;height:100vh;background:#000;color:#fff;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-.wrap{width:min(560px,92vw);text-align:center;padding:18px 14px}
-.title{font-weight:900;font-size:clamp(1.4rem,4.2vw,2.1rem)}
-.sub{opacity:.75;margin-top:6px;font-size:clamp(.9rem,3vw,1.05rem)}
+  *{box-sizing:border-box}
+  body{
+    margin:0;height:100vh;background:#000;color:#fff;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+  .wrap{width:min(560px,92vw);text-align:center;padding:18px 14px}
+  .title{font-weight:900;font-size:clamp(1.4rem,4.2vw,2.1rem)}
+  .sub{opacity:.75;margin-top:6px;font-size:clamp(.9rem,3vw,1.05rem)}
 
-.wheel-area{margin-top:18px;display:flex;align-items:center;justify-content:center;position:relative}
+  .wheel-area{margin-top:18px;display:flex;align-items:center;justify-content:center;position:relative}
 
-.wheel{
-  width:min(340px,78vw);
-  height:min(340px,78vw);
-  border-radius:50%;
-  border:6px solid rgba(255,255,255,.18);
-  box-shadow:0 0 24px rgba(255,255,255,.08);
-  background:
-    conic-gradient(
-      #ffcccc 0deg 45deg,
-      #ccccff 45deg 90deg,
-      #ccffff 90deg 135deg,
-      #ffcccc 135deg 180deg,
-      #ccccff 180deg 225deg,
-      #ccffff 225deg 270deg,
-      #ffcccc 270deg 315deg,
-      #ccccff 315deg 360deg
-    );
-  transition:transform 3.6s cubic-bezier(.12,.9,.15,1);
-}
+  .wheel{
+    width:min(340px,78vw);
+    height:min(340px,78vw);
+    border-radius:50%;
+    border:6px solid rgba(255,255,255,.18);
+    box-shadow:0 0 24px rgba(255,255,255,.08);
+    background:
+      conic-gradient(
+        #ff3b3b 0deg 45deg,
+        #ff8c00 45deg 90deg,
+        #ffd700 90deg 135deg,
+        #22c55e 135deg 180deg,
+        #00ffff 180deg 225deg,
+        #3b82f6 225deg 270deg,
+        #a855f7 270deg 315deg,
+        #ff1493 315deg 360deg
+      );
+    transition:transform 3.6s cubic-bezier(.12,.9,.15,1);
+  }
 
-.cap{
-  position:absolute;width:34%;height:34%;
-  border-radius:50%;background:rgba(0,0,0,.78);
-  border:4px solid rgba(255,255,255,.18);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:900;text-transform:uppercase;
-}
+  .cap{
+    position:absolute;width:34%;height:34%;
+    border-radius:50%;background:rgba(0,0,0,.78);
+    border:4px solid rgba(255,255,255,.18);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:900;text-transform:uppercase;
+    letter-spacing:1px;
+    box-shadow: inset 0 0 18px rgba(255,255,255,.08);
+  }
 
-.pointer{
-  position:absolute;top:-6px;
-  border-left:14px solid transparent;
-  border-right:14px solid transparent;
-  border-bottom:26px solid #22c55e;
-}
+  .pointer{
+    position:absolute;top:-6px;
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-bottom:26px solid #22c55e;
+    filter: drop-shadow(0 0 10px rgba(34,197,94,.35));
+  }
 
-.controls{margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-button{
-  border:none;border-radius:12px;padding:12px 16px;
-  font-weight:900;cursor:pointer;background:#22c55e;color:#000;
-}
-button.secondary{
-  background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.18);
-}
-button:disabled{opacity:.55;cursor:not-allowed}
+  .controls{margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  button{
+    border:none;border-radius:12px;padding:12px 16px;
+    font-weight:900;cursor:pointer;background:#22c55e;color:#000;
+    box-shadow:0 0 16px rgba(34,197,94,.25);
+  }
+  button:disabled{opacity:.55;cursor:not-allowed}
 
-.result{
-  margin-top:16px;padding:14px;border-radius:14px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.14);
-  text-align:left;min-height:92px;
-}
-.result h3{margin:0 0 6px 0;font-size:1.05rem}
-.result p{margin:0;opacity:.9;line-height:1.45}
-.tag{
-  display:inline-block;margin-top:10px;padding:4px 10px;
-  border-radius:999px;font-size:.85rem;font-weight:900;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);
-}
+  .result{
+    margin-top:16px;padding:14px;border-radius:14px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14);
+    text-align:left;min-height:110px;
+  }
+  .result h3{margin:0 0 6px 0;font-size:1.05rem}
+  .result p{margin:0;opacity:.9;line-height:1.45}
 
-.fx{position:fixed;inset:0;pointer-events:none}
-.spark{
-  position:absolute;width:8px;height:8px;border-radius:50%;
-  transform:translate(-50%,-50%);
-  animation:pop 700ms ease-out forwards;
-}
-@keyframes pop{
-  0%{transform:translate(-50%,-50%) scale(.7);opacity:.9}
-  100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(0);opacity:0}
-}
+  .big-emoji{
+    font-size:2rem;
+    display:inline-block;
+    transform: translateY(2px);
+    filter: drop-shadow(0 0 10px rgba(255,255,255,.10));
+  }
+
+  .tag{
+    display:inline-block;margin-top:10px;padding:4px 10px;
+    border-radius:999px;font-size:.85rem;font-weight:900;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.16);
+  }
+
+  .fx{position:fixed;inset:0;pointer-events:none}
+  .spark{
+    position:absolute;width:8px;height:8px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    animation:pop 700ms ease-out forwards;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,.12));
+  }
+  @keyframes pop{
+    0%{transform:translate(-50%,-50%) scale(.8);opacity:.95}
+    100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(0);opacity:0}
+  }
 </style>
 </head>
 <body>
@@ -99,13 +109,12 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <div class="wheel-area">
     <div class="pointer"></div>
     <div class="wheel" id="wheel">
-      <div class="cap">spin</div>
+      <div class="cap">mira rng</div>
     </div>
   </div>
 
   <div class="controls">
     <button id="spinBtn">🎡 spin</button>
-    <button class="secondary" id="soundBtn">🔊 sound: off</button>
   </div>
 
   <div class="result" id="resultBox">
@@ -116,74 +125,215 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </div>
 
 <script>
-const outcomes = [
- {title:"🍫 snack buff activated",text:"+10 mood. go grab something sweet.",rarity:"common"},
- {title:"🎧 5-minute reset",text:"pause. breathe. you’re doing better than you think.",rarity:"common"},
- {title:"🧃 hydration check",text:"mira suspects dehydration. confirm with water 😌",rarity:"common"},
- {title:"🧠 overthinking nerfed",text:"debuff removed. you’re fine. proceed.",rarity:"common"},
- {title:"💪 main character energy",text:"walk like the protagonist you are.",rarity:"uncommon"},
- {title:"😏 minor distraction",text:"you just thought about mira. this was intentional.",rarity:"uncommon"},
- {title:"🫠 soft mode",text:"90% is already impressive. be kind to you.",rarity:"uncommon"},
- {title:"🎮 rare drop!",text:"+1 mira forehead kiss (absorbs 10% stress). redeemable anytime 😙",rarity:"rare"}
-];
+  // ---- Outcomes (rare is exactly 1/8) ----
+  const outcomes = [
+    {emoji:"🍫", title:"snack buff activated", text:"+10 mood. go grab something sweet.", rarity:"common", sfx:"snack"},
+    {emoji:"🎧", title:"5-minute reset", text:"pause. breathe. you’re doing better than you think.", rarity:"common", sfx:"soft"},
+    {emoji:"🧃", title:"hydration check", text:"mira suspects dehydration. confirm with water 😌", rarity:"common", sfx:"ping"},
+    {emoji:"🧠", title:"overthinking nerfed", text:"debuff removed. you’re fine. proceed.", rarity:"common", sfx:"fort"},
+    {emoji:"💪", title:"main character energy", text:"walk like the protagonist you are.", rarity:"uncommon", sfx:"atk"},
+    {emoji:"😏", title:"minor distraction", text:"you just thought about mira. this was intentional.", rarity:"uncommon", sfx:"wink"},
+    {emoji:"🫠", title:"soft mode", text:"90% is already impressive. be kind to you.", rarity:"uncommon", sfx:"soft"},
+    {emoji:"😙", title:"rare drop!", text:"+1 mira forehead kiss (absorbs 10% stress). redeemable anytime.", rarity:"rare", sfx:"rare"}
+  ];
 
-const wheel=document.getElementById("wheel");
-const spinBtn=document.getElementById("spinBtn");
-const resultBox=document.getElementById("resultBox");
-const rarityTag=document.getElementById("rarityTag");
-const fx=document.getElementById("fx");
+  const wheel = document.getElementById("wheel");
+  const spinBtn = document.getElementById("spinBtn");
+  const resultBox = document.getElementById("resultBox");
+  const rarityTag = document.getElementById("rarityTag");
+  const fx = document.getElementById("fx");
 
-let spinning=false;
-let rotation=0;
+  let spinning = false;
+  let rotation = 0;
 
-function burst(x,y,count=20){
- const colors=['#ccccff','#ffcccc','#ccffff','#ffcccc','#ccccff'];
- for(let i=0;i<count;i++){
-  const d=document.createElement("div");
-  d.className="spark";
-  d.style.left=x+"px";
-  d.style.top=y+"px";
-  d.style.background=colors[Math.floor(Math.random()*colors.length)];
-  d.style.setProperty("--dx",(Math.random()*2-1)*120+"px");
-  d.style.setProperty("--dy",(Math.random()*2-1)*120+"px");
-  fx.appendChild(d);
-  d.addEventListener("animationend",()=>d.remove());
- }
-}
-
-spinBtn.addEventListener("click",()=>{
- if(spinning) return;
- spinning=true;
- spinBtn.disabled=true;
-
- const sliceDeg=360/outcomes.length;
- const idx=Math.floor(Math.random()*outcomes.length); // EXACT 1/8 chance
- const targetCenter=idx*sliceDeg + sliceDeg/2;
- const extraSpins=6*360;
- rotation+=extraSpins + (360-targetCenter);
-
- wheel.style.transform=`rotate(${rotation}deg)`;
-
- setTimeout(()=>{
-  const out=outcomes[idx];
-  resultBox.querySelector("h3").textContent="result: "+out.title;
-  resultBox.querySelector("p").textContent=out.text;
-  rarityTag.textContent=out.rarity;
-
-  if(out.rarity==="rare"){
-   rarityTag.style.background="rgba(34,197,94,.15)";
-   rarityTag.style.borderColor="rgba(34,197,94,.6)";
-   burst(window.innerWidth/2,window.innerHeight/2,40);
-  }else{
-   rarityTag.style.background="rgba(255,255,255,.10)";
-   rarityTag.style.borderColor="rgba(255,255,255,.16)";
-   burst(window.innerWidth/2,window.innerHeight/2,20);
+  // ---- Sparkles ----
+  function burst(x,y,count=20,spread=120){
+    const colors = ['#ff3b3b','#ff8c00','#ffd700','#22c55e','#00ffff','#3b82f6','#a855f7','#ff1493'];
+    for(let i=0;i<count;i++){
+      const d=document.createElement("div");
+      d.className="spark";
+      d.style.left=x+"px";
+      d.style.top=y+"px";
+      d.style.background=colors[(Math.random()*colors.length)|0];
+      d.style.setProperty("--dx",(Math.random()*2-1)*spread+"px");
+      d.style.setProperty("--dy",(Math.random()*2-1)*spread+"px");
+      fx.appendChild(d);
+      d.addEventListener("animationend",()=>d.remove());
+    }
+  }
+  function burstAt(el, big=false){
+    const r = el.getBoundingClientRect();
+    burst(r.left+r.width/2, r.top+r.height/2, big?44:22, big?180:120);
   }
 
-  spinning=false;
-  spinBtn.disabled=false;
- },3700);
-});
+  // ---- Audio (auto starts on first Spin click) ----
+  let audioCtx=null, master=null, bgGain=null, bgTimer=null, soundOn=false;
+
+  function ensureAudio(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0.9;
+      master.connect(audioCtx.destination);
+
+      bgGain = audioCtx.createGain();
+      bgGain.gain.value = 0.07;
+      bgGain.connect(master);
+    }
+  }
+
+  function tone(freq, when, dur, type="square", gain=0.22){
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(freq, when);
+    g.gain.setValueAtTime(0.0001, when);
+    g.gain.exponentialRampToValueAtTime(gain, when + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+    o.connect(g); g.connect(master);
+    o.start(when); o.stop(when + dur + 0.02);
+  }
+
+  function startBG(){
+    if(soundOn) return;
+    ensureAudio();
+    soundOn = true;
+
+    const notes = [261.63,329.63,392.00,523.25];
+    let idx=0;
+
+    function blip(freq, when){
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type="square";
+      o.frequency.setValueAtTime(freq, when);
+      g.gain.setValueAtTime(0.0001, when);
+      g.gain.exponentialRampToValueAtTime(0.65, when+0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, when+0.12);
+      o.connect(g); g.connect(bgGain);
+      o.start(when); o.stop(when+0.14);
+    }
+
+    function schedule(){
+      if(!soundOn) return;
+      const now = audioCtx.currentTime;
+      for(let k=0;k<6;k++) blip(notes[(idx+k)%notes.length], now + k*0.18);
+      idx=(idx+1)%notes.length;
+      bgTimer=setTimeout(schedule, 1100);
+    }
+    schedule();
+  }
+
+  function sfx(name){
+    ensureAudio();
+    const now = audioCtx.currentTime;
+
+    if(name==="spin"){
+      [900,700,520,420].forEach((f,i)=>tone(f, now+i*0.06, 0.10, "square", 0.18));
+      return;
+    }
+    if(name==="tick"){
+      tone(1200, now, 0.06, "square", 0.14);
+      return;
+    }
+    if(name==="soft"){
+      [392,494,587].forEach((f,i)=>tone(f, now+i*0.01, 0.18, "sine", 0.16));
+      return;
+    }
+    if(name==="fort"){
+      [220,277,330].forEach((f,i)=>tone(f, now+i*0.07, 0.16, "triangle", 0.16));
+      return;
+    }
+    if(name==="atk"){
+      tone(980, now, 0.08, "square", 0.20);
+      tone(1200, now+0.05, 0.08, "square", 0.16);
+      return;
+    }
+    if(name==="ping"){
+      tone(880, now, 0.10, "square", 0.16);
+      return;
+    }
+    if(name==="wink"){
+      tone(740, now, 0.08, "square", 0.18);
+      tone(1040, now+0.05, 0.08, "square", 0.15);
+      return;
+    }
+    if(name==="snack"){
+      [520,660,820].forEach((f,i)=>tone(f, now+i*0.05, 0.12, "square", 0.17));
+      return;
+    }
+    if(name==="rare"){
+      [523.25,659.25,783.99].forEach((f,i)=>tone(f, now+i*0.01, 0.55, "sawtooth", 0.13));
+      tone(1040, now+0.22, 0.18, "sine", 0.10);
+      return;
+    }
+  }
+
+  function setResult(out){
+    resultBox.querySelector("h3").innerHTML =
+      `result: <span class="big-emoji">${out.emoji}</span> ${out.title}`;
+    resultBox.querySelector("p").textContent = out.text;
+
+    rarityTag.textContent = out.rarity;
+
+    if(out.rarity==="rare"){
+      rarityTag.style.background="rgba(34,197,94,.15)";
+      rarityTag.style.borderColor="rgba(34,197,94,.6)";
+    } else if(out.rarity==="uncommon"){
+      rarityTag.style.background="rgba(0,255,255,.10)";
+      rarityTag.style.borderColor="rgba(0,255,255,.28)";
+    } else {
+      rarityTag.style.background="rgba(255,255,255,.10)";
+      rarityTag.style.borderColor="rgba(255,255,255,.16)";
+    }
+  }
+
+  spinBtn.addEventListener("click", async () => {
+    if(spinning) return;
+    spinning=true;
+    spinBtn.disabled=true;
+
+    try{
+      ensureAudio();
+      if(audioCtx.state==="suspended") await audioCtx.resume();
+      startBG(); // auto-start background on first spin
+    }catch(e){}
+
+    sfx("spin");
+    burstAt(wheel,false);
+
+    const sliceDeg = 360/outcomes.length;
+    const idx = Math.floor(Math.random()*outcomes.length); // EXACT 1/8
+    const targetCenter = idx*sliceDeg + sliceDeg/2;
+    const extraSpins = 6*360;
+    rotation += extraSpins + (360 - targetCenter);
+
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    // tick sounds during spin
+    let ticks=0;
+    const tickTimer=setInterval(()=>{
+      if(!spinning) return;
+      sfx("tick");
+      ticks++;
+      if(ticks>=10) clearInterval(tickTimer);
+    },220);
+
+    setTimeout(()=>{
+      const out = outcomes[idx];
+      setResult(out);
+      sfx(out.sfx);
+
+      if(out.rarity==="rare"){
+        burstAt(resultBox,true);
+      } else {
+        burstAt(resultBox,false);
+      }
+
+      spinning=false;
+      spinBtn.disabled=false;
+    },3700);
+  });
 </script>
 </body>
-</html>
+  </html>
